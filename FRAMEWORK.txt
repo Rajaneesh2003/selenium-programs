@@ -1,0 +1,1026 @@
+TESTNG================================================================
+
+A)PARAMETERISED TESTNG=============
+package demotestng;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+import io.github.bonigarcia.wdm.WebDriverManager;
+@Test
+public class ParameterisedTestng {
+	@Parameters({"email","password"})//we are giving the name of email and password in parameters and  after coverting it to xml           
+         we have to give value there then also it will run
+	@Test
+	
+	     void login(String email,String pass)
+	     {
+		System.out.println(email+ ""+pass);//we are printing email and password
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		System.out.println("****parameters***");
+		driver.get("https://letcode.in/");
+		driver.manage().window().maximize();
+		
+		driver.findElement(By.linkText("Sign up")).click();
+		driver.findElement(By.name("name")).sendKeys("doongwoo");
+		driver.findElement(By.id("email")).sendKeys(email);//we are just written email in xml we have to give value
+		driver.findElement(By.xpath("//input[@name='password']")).sendKeys(pass);//same here
+		WebElement checkbox=driver.findElement(By.id("agree"));
+	if(!checkbox.isSelected()) {
+		checkbox.click();
+	}
+	WebElement button=driver.findElement(By.xpath("//button[@class='button is-primary']"));
+	button.click();
+	button.submit();
+	     }
+}
+
+
+PARAMETERISED TESTNG AFTER CONVERTING INTO XML FILE==============
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+	<parameter name="email" value="Ranju@132323"></parameter>//here we are giving value so it can run
+	<parameter name="password" value="Ranahunsuk224"></parameter>
+   <test name="Test" thread-count="5">
+	   <classes>
+		   <class name="demotestng.ParameterisedTestng"/>//it is our packagename.classnmae
+	   </classes>	  
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
+
+=======================================================================================================================
+TESTNG ==AMAZON AND FLIPKART BOTH IN ONE===
+package demotestng;                                            
+
+import org.testng.annotations.Test;
+import org.testng.annotations.BeforeClass;
+import org.openqa.selenium.By;                                   
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+public class TestNg
+{
+		
+			WebDriver driver;
+
+		    @BeforeClass//This is annotations . Without annotations also we can run code
+		    public void setup()
+		    {
+		        System.out.println("open amzon.");//It is amazon page printing code
+		        WebDriverManager.chromedriver().setup();
+		        driver = new ChromeDriver();
+		        driver.manage().window().maximize();
+		    }
+
+		    @BeforeMethod
+		    public void goToAmazonHomePage()
+		    {
+		        System.out.println("Navigating to Amazon India homepage.");//It is amazon page URL
+		        driver.get("https://www.amazon.in/");
+		    }
+
+		    @Test(priority = 1)//Priority=1 means It will execute First then according to numbers it will execute .If priority                                              is                     not mentioned then it will automatically take the ASCII value
+		public void testAmazonSearch() throws InterruptedException 
+		    {
+		        System.out.println("Executing Amazon search test.");
+		        driver.findElement(By.id("twotabsearchtextbox")).sendKeys("shoes");//This is serach box URL and sending keys        t                   o Search box
+		        Thread.sleep(2000);
+		        driver.findElement(By.id("nav-search-submit-button")).click(); //This is clicking codeURl
+		    }
+		@Test(priority = 3)// Then it will execute 3rd  
+		    public void testNavigationToFlipkartAndSearch() throws InterruptedException {//Here directly navigating to FlipKart 
+		        System.out.println("Navigating to Flipkart and performing search.");
+		        Thread.sleep(2000);
+		        driver.navigate().to("https://www.flipkart.com/");//It is Flipkart URL
+		        driver.findElement(By.name("q")).sendKeys("shoes");//Here sending keys to searchbox
+		        Thread.sleep(2000);
+		        driver.quit();
+		    }
+		@Test(priority = 2)//This will execute 2nd
+		    public void testNavigationCommands() throws InterruptedException {
+		        System.out.println("Testing navigation commands");
+
+		       
+		        driver.navigate().back();//This is code for back navigation 
+		        Thread.sleep(2000);
+		        
+		        driver.navigate().forward();//This is code for  forward navigation
+		        Thread.sleep(2000);		
+	}
+}
+
+
+ASSERTIN DEMO======================================================================================================
+package assertion;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import org.testng.asserts.Assertion;
+import org.testng.asserts.SoftAssert;
+import io.github.bonigarcia.wdm.WebDriverManager;
+public class AsertDemo {
+	
+	@Test
+	public void testSoft() {
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		
+		SoftAssert softassert = new SoftAssert();//here we using softassert it means if actual and expected result are not same then also the code will runby using softassertall
+		
+		String ExpectedTitle = "Swag Labs";//it is expected title
+		
+		System.out.println("Expected Title :"+ExpectedTitle);//it is expected title printing
+		 
+		driver.get("https://www.saucedemo.com/");//it  is url
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		driver.findElement(By.id("user-name")).sendKeys("standard_user");
+		driver.findElement(By.id("password")).sendKeys("secret_sauce");
+		driver.findElement(By.id("login-button")).click();
+		
+		String ActualTitle= driver.getTitle();//it is actual title
+		System.out.println("Actual Title:"+ActualTitle);//it is actual title printing
+		
+		
+		softassert.assertEquals(ActualTitle,ExpectedTitle );//it is softassert 
+		
+		softassert.assertAll();//it main in softassert if we will not mention then it will automatically be hardassert
+		
+	}
+	@Test
+	public void testHard() {
+	WebDriverManager.chromedriver().setup();
+	ChromeDriver driver=new ChromeDriver();
+	driver.manage().window().maximize();
+	
+	//Assertion haedAssert  = new Assertion();
+	
+	String ExpectedTitle1 = "Swag Labs";//it is expected title
+	
+	System.out.println("Expected Title :"+ExpectedTitle1);//it is expected title printing
+	 
+	driver.get("https://www.saucedemo.com/");//it  is url
+	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+	driver.findElement(By.id("user-name")).sendKeys("standard_user");
+	driver.findElement(By.id("password")).sendKeys("secret_sauce");
+	driver.findElement(By.id("login-button")).click();
+	
+	String ActualTitle1= driver.getTitle();//it is actual title
+	System.out.println("Actual Title:"+ActualTitle1);//it is actual title printing
+	
+	
+	//haedAssert.assertEquals(ActualTitle1,ExpectedTitle1 );
+	Assert.assertEquals(ActualTitle1, ExpectedTitle1);//if we use this single line also it will run
+	//if this line false then remaining line will not execute .if it is true then remaining line will execute
+	System.out.println("it will display if it will be fasle");
+	driver.quit();
+}
+	
+}
+
+ASSERTION DEMO ANOTHER SMALL PROGRAM=====
+package listeners;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class listenerlogin {
+	
+	@Test
+	
+	void loginByEmail() {
+		System.out.println("Login by Email");
+		Assert.assertEquals("saraha", "saraha");
+		
+	}
+	@Test
+	void loginByBook() {
+		System.out.println("login by facebook");
+		Assert.assertEquals("randibaas", "chutiyabaas");
+	}
+	
+
+}
+	
+
+LISTENERS DEMO============================================================================
+package listeners;
+
+import org.testng.ITestListener;
+import org.testng.ITestResult;
+
+public class ListenersDemo  implements ITestListener{
+	
+	public void onTestStart(ITestResult result) {
+		System.out.println("Test case Started");
+		
+	}
+	
+	public void onTestSuccess(ITestResult result) {
+		System.out.println("Test case Success");
+		
+	}
+	
+	public void onTestFailure(ITestResult result) {
+		System.out.println("Test case Failed");
+		
+	}
+	
+	public void onTestSkipped(ITestResult result) {
+		System.out.println("Test case Skipped");
+		
+	}
+}
+ ITS XML FILE================
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+	<listeners>
+		<listener class-name="listeners.ListenersDemo"></listener>
+	</listeners>
+	
+  <test thread-count="5" name="Test">
+    <classes>
+      <class name="listeners.listenerlogin"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
+
+
+DEPENDS ON METHODS======================================================================================================
+package testng;
+
+import org.testng.annotations.Test;
+
+public class DependsonMethod {
+	
+	@Test(description="This is failed testcase")
+	public void WebStudentLogin() throws InterruptedException {
+		Thread.sleep(400);
+		System.out.println("Student Login Through Web");
+		
+	}
+	@Test()
+	public void MobileStudentLogin() {
+		System.out.println("Student Login Through Mobile");
+		
+	}
+	@Test()
+	public void APIStudentLogin() {
+		System.out.println("Student Login Through API");
+		
+	}
+
+}
+
+//Based on ASCII value Mobile will execute first
+//All the Test cases will in ascending value(so mobile will run first)
+//Now API will run first because it ascii value is A
+
+//1)dependsOnMethods====
+//@Test(dependsOnMethods = {"WebStudentLogin","MobileStudentLogin"})//here mobile will run first then Web will run second after that API
+//public void APIStudentLogin() {                            //API methods will depends on this two methods(WebStudentLogin","MobileStudentLogin)
+	//System.out.println("Student Login Through API");
+
+//2)timeout===
+//@Test(timeOut=200)                                   //here it will not run because timelimit is 200 so thread is given 400
+//public void WebStudentLogin() throws InterruptedException {//if the thread is 100 or 150 or 200 it will run 
+	//Thread.sleep(400);                                 //always thread should be given less or equal to timeout
+	//System.out.println("Student Login Through Web");
+
+//4)Description===
+//@Test(description="This is failed testcase")            //here is just like comand line were this method will repeat same as given description
+//public void WebStudentLogin() throws InterruptedException {
+	//Thread.sleep(400);
+	//System.out.println("Student Login Through Web");
+	
+//5)Enable===
+//Test(enable=false)//here is will not run because enable is given false
+                    //if we give enable is true it will run
+
+//6)Regex===
+//after creating class we have to convert it into testNG in test ng 
+//<class name="classname.UsingRegex">here regex we have mentioned 
+//    <methods>
+//      <include name="Mobile.*></include>//here in method we have given method so in how much ever method we have given mobile it will display
+      //<method>
+
+//InvocationCount==4
+//it means that method will run 4 time
+
+GROUPING IN TESTNG DEMO=========================================================================================================
+A)
+package testngGroups;
+import org.testng.annotations.Test;
+public class Car_Loan {
+	
+	@Test
+	public void WebLoginCarLoan() {
+		System.out.println("WebLoginCarLoan");
+	}
+	
+	@Test
+	public void MobileLoginCarLoan() {
+		System.out.println("WebLoginCarLoan");
+	}
+	
+	@Test(groups= {"SmokeTest"})
+	public void APILoginCarLoan() {
+		System.out.println("WebLoginCarLoan");
+	}	
+}
+
+B)
+package testngGroups;
+import org.testng.annotations.Test;
+public class Home_Loan {
+	@Test
+	public void WebLoginCarLoan() {
+		System.out.println("WebLoginCarLoan");
+	}
+	
+	@Test(groups= {"SmokeTest"})
+	public void MobileLoginCarLoan() {
+		System.out.println("WebLoginCarLoan");
+	}
+	
+	@Test()
+	public void APILoginCarLoan() {
+		System.out.println("WebLoginCarLoan");
+	}
+}
+
+C)
+package testngGroups;
+import org.testng.annotations.Test;
+public class Personal_Loan {
+	
+	@Test(groups= {"SmokeTest"})
+	public void WebLoginCarLoan() {
+		System.out.println("WebLoginCarLoan");
+	}
+	
+	@Test
+	public void MobileLoginCarLoan() {
+		System.out.println("WebLoginCarLoan");
+	}
+	
+	@Test()
+	public void APILoginCarLoan() {
+		System.out.println("WebLoginCarLoan");
+	}
+}
+
+WE HAVE CONVERTED THIS PACKAGE INTO XML FILE======
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+  <test name="Test">
+	  <groups>
+		  <run>
+			  <include name="SmokeTest"></include>
+		  </run>
+	  </groups>
+    <classes>
+		
+      <class name="testngGroups.Personal_Loan"/>
+      <class name="testngGroups.Home_Loan"/>
+      <class name="testngGroups.Car_Loan"/>
+   
+    </classes>
+  </test> <!-- Test -->
+</Suite> <!-- Suite -->
+
+//We have created three classes and each class in one one method we have mentioned( smoke test)
+so (Include) means wherever we have mentioned smoke test it will display first
+
+//(Exclude) means wherever we have mentioned smoketest it will not execute or display
+
+
+
+ALL IN ONE TESTNG LIKE(ANNOTATIONS,LISTENERS,ASSERTION (FALSE) TO TAKE SCREENSHOT)
+A)
+package annotationlistenerscreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
+import io.github.bonigarcia.wdm.WebDriverManager;
+public class BaseTest {
+	public static WebDriver driver=null;
+	@BeforeSuite//here we are opening the browser as before suit
+	public void LaunchBrowser() {
+		WebDriverManager.chromedriver().setup();
+		driver=new ChromeDriver();		
+	}	
+	@AfterSuite//here we are closing the browser so we are using aafter suite
+	public  void closingBrowser() {
+		driver.quit();
+	}
+}
+
+
+B) 
+package annotationlistenerscreenshot;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+public class listenersallinone extends BaseTest {//using extend we are occupining base class properties
+	@Test
+	public void launchApp() {//here we are launching the URL
+		driver.get("https://www.saucedemo.com/");
+		Assert.assertTrue(false);//here we have given assert false because if the error occupied then only we can take             screenshot
+		 
+	}
+}
+
+
+C)
+package annotationlistenerscreenshot;
+import java.io.IOException;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
+public class Listsnersit extends screenshotallinone implements ITestListener {//here we have extended the screenshot class because we have to take screenshot
+	
+	public void onTestStart(ITestResult result) {
+		System.out.println("Test case is Started");
+	}
+	public void onTestSuccess(ITestResult result) {
+		System.out.println("Test case is Success");
+	}
+	public void onTestFailure(ITestResult result) {
+		System.out.println("Test case is Failed - Screenshot capture");//here we have called the class name to take screenshot
+	try {
+		getScreenshot();
+	}
+	catch(IOException e) {
+		e.printStackTrace();
+	}
+	}
+	public void onTestSkipped(ITestResult result) {
+		System.out.println("Test case is Skipped");
+	}
+}
+
+D)
+package annotationlistenerscreenshot;
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+public class screenshotallinone  extends BaseTest{//this program is for taking screenshot and saving the file format	
+	public void getScreenshot() throws IOException {
+		Date currentdate=new Date();
+		String screenshotfilename=currentdate.toString().replace(" ", " ").replace(" :", "-");
+		File screenshotFile=((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(screenshotFile, new File(".//screen/" +screenshotfilename + ".png"));//it is file path		
+	}
+}
+
+THIS PACKAGE WE WILL CONVERT INTO XML FILE====
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+	<listeners>
+		<listener class-name="annotationlistenerscreenshot.listeners"></listener>
+	</listeners>
+	
+  <test thread-count="5" name="Test">
+    <classes>
+      <class name="annotationlistenerscreenshot.listenersallinone"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
+
+
+PARALLEL TESTNG========================================================================================
+package demotestng;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+
+public class para2 {
+	RemoteWebDriver driver;//we used this to run in browser
+	@Parameters({"email","password","browser"})//we are giving the name of email and password in parameters and  after coverting it to xml we have to give value there then also it will run
+	@Test
+	
+	     void login(String email,String pass,String browser)
+	     {
+	switch(browser)//we added switch so that it will run in both the browser
+	{
+	case "chrome":
+		driver=new ChromeDriver();//it is chrome
+		
+		break;
+	case "Edge":
+		driver=new EdgeDriver();//it is edge
+		break;
+	default:
+		System.out.println("error");//if it will not run error will display
+		break;	
+	}
+		driver.get("https://letcode.in/");//it is URL
+		driver.findElement(By.linkText("Sign up")).click();
+		driver.findElement(By.name("name")).sendKeys("doongwoo");
+		driver.findElement(By.id("email")).sendKeys(email);//we are just written email in xml we have to give value
+		driver.findElement(By.xpath("//input[@name='password']")).sendKeys(pass);//same here
+		WebElement checkbox=driver.findElement(By.id("agree"));
+	if(!checkbox.isSelected()) {
+		checkbox.click();
+	}
+	WebElement button=driver.findElement(By.xpath("//button[@class='button is-primary']"));
+	button.click();
+	button.submit();
+	driver.quit();	
+	     }
+}
+
+CONVERT INTO XML FILE========
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="tests">//here er are given parallel so it will run same in both the browser
+	<parameter name="email" value="Ranju@132323"></parameter> 
+	<parameter name="password" value="Ranahunsuk224"></parameter>
+  <test thread-count="5" name="chromeTest">//here we are given chrome to run in chrome
+	  <parameter name="browser" value="chrome"></parameter>//here its parameter
+	  <classes>
+		  <class name="demotestng.para2"/>//it is package .class name
+	  </classes>
+  </test> <!-- Test -->
+  <test thread-count="5" name="EdgeTest">//here we are given edge to run in edge
+	  <parameter name="browser" value="Edge"></parameter>//its parameter
+	  <classes>
+		  <class name="demotestng.para2"/>//it is package .class name
+	  </classes>
+  </test> <!--Test-->
+</suite> <!-- Suite -->
+
+
+PAGE OBJECT MODEL FRAMEWORK===================================================================================================
+A)(ONE PACKAGE)
+package pageObject;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+public class LoginPageObject {
+	
+	// username ,password ,submit btn ,Admin,Job,Paygrades,Add,name,Save
+	
+	public static  WebElement username(WebDriver driver) {//here we have given (static) soo we can access that methoad publically
+		return driver.findElement(By.name("username"));//here we have (return) the the username xpath
+			
+	}
+	public static  WebElement password(WebDriver driver) {
+		return driver.findElement(By.name("password"));
+			
+	}
+	public static  WebElement loginbtn(WebDriver driver) {
+		return driver.findElement(By.xpath("//button[normalize-space()='Login']"));
+			
+	}
+	public static  WebElement Admin(WebDriver driver) {
+		return driver.findElement(By.xpath("//aside[@class='oxd-sidepanel']//li[1]"));
+			
+	}
+	public static  WebElement Job(WebDriver driver) {
+		return driver.findElement(By.xpath("//span[normalize-space()='Job']"));
+			
+	}
+	public static  WebElement Paygrades(WebDriver driver) {
+		return driver.findElement(By.xpath("//a[normalize-space()='Pay Grades']"));
+			
+	}
+	public static  WebElement Add(WebDriver driver) {
+		return driver.findElement(By.xpath("//button[normalize-space()='Add']"));
+			
+	}
+	public static  WebElement name1(WebDriver driver) {
+		return driver.findElement(By.xpath("//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@class='oxd-input oxd-input--active']"));
+			
+	}
+	public static  WebElement save1(WebDriver driver) {
+		return driver.findElement(By.xpath("//button[normalize-space()='Save']"));
+			
+	}
+	public static  WebElement Job1(WebDriver driver) {
+		return driver.findElement(By.xpath("//span[normalize-space()='Job']"));
+			
+	}
+	public static  WebElement JobTitle(WebDriver driver) {
+		return driver.findElement(By.xpath("//li[@class='--active oxd-topbar-body-nav-tab --parent']//li[1]"));
+	}
+	
+	public static  WebElement Add1(WebDriver driver) {
+		return driver.findElement(By.xpath("//button[normalize-space()='Add']"));
+	}
+
+	public static  WebElement jobtitle(WebDriver driver) {
+		return driver.findElement(By.xpath("//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@class='oxd-input oxd-input--active']"));
+	}
+}
+
+B)(ONE PACKAGE)
+package testCases;
+import java.time.Duration;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.Test;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import pageObject.LoginPageObject;
+public class LoginTestCase {
+	
+	@Test
+	public void loginTestCase() throws InterruptedException{
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+	        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+	        Thread.sleep(1000);
+	    
+	    //this is for login page
+	    LoginPageObject.username(driver).sendKeys("Admin");//here we have directly accessed the method name
+	    Thread.sleep(1000);
+	    LoginPageObject.password(driver).sendKeys("admin123");
+	    Thread.sleep(1000);
+	    LoginPageObject.loginbtn(driver).click();
+	    Thread.sleep(1000);
+	    
+	    //this is for admin page
+	    LoginPageObject.Admin(driver).click();
+	    Thread.sleep(1000);
+	    LoginPageObject.Job(driver).click();
+	    Thread.sleep(1000);
+	    LoginPageObject.Paygrades(driver).click();
+	    Thread.sleep(1000);
+	    LoginPageObject.Add(driver).click();
+	    Thread.sleep(1000);
+	    LoginPageObject.name1(driver).sendKeys("kanmasshj");
+	    Thread.sleep(1000);
+	    LoginPageObject.save1(driver).click();
+	    
+	    //this for navigation.back
+	    driver.navigate().back();
+		Thread.sleep(2000);
+		
+		//this is for jobtitle
+		LoginPageObject.Job1(driver).click();
+		Thread.sleep(2000);
+		LoginPageObject.Add1(driver).click();
+		Thread.sleep(2000);
+		LoginPageObject.jobtitle(driver).sendKeys("cucumber");
+		Thread.sleep(2000);
+}
+}
+
+
+PAGE OBJECT MODEL FINDBY()=========(ONE PACKAGE)
+A)
+package testCases;
+import java.time.Duration;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.Test;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import pageObject.LoginpageObject1;//here we have to add the class name
+public class LogintestCase1 {
+	@Test
+	public void loginTestCase() throws InterruptedException{
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+	    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+	    Thread.sleep(1000);
+	    
+	     PageFactory.initElements(driver, LoginpageObject1.class);//here we have added page factory in that we have given driver,our classname which we have created the methoad and its location
+	     LoginpageObject1.username.sendKeys("Admin");//here we have directly given the methoad name and sended the key
+	     LoginpageObject1.password.sendKeys("admin123");
+	     LoginpageObject1.loginbtn.click();
+	     LoginpageObject1.Admin.click();
+	     LoginpageObject1.Job.click();
+	     LoginpageObject1.Paygrades.click();
+	     LoginpageObject1.Add.click();
+	     LoginpageObject1.name1.sendKeys("kukucara");
+	}
+
+}
+
+B)(ANOTHER PACKAGE)
+package pageObject;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+
+public class LoginpageObject1 {
+	
+	@FindBy(how=How.NAME, using="username")//here we have created the method using findBy(how =how.locator name
+	public static WebElement username;
+	
+	@FindBy(name="password")//here we have given the locator or that button or anything
+	public static WebElement password;
+	
+	@FindBy(xpath="//button[normalize-space()='Login']")
+	public static WebElement loginbtn;
+	
+	@FindBy(xpath="//aside[@class='oxd-sidepanel']//li[1]")
+	public static WebElement Admin;
+	
+	@FindBy(xpath="//span[normalize-space()='Job']")
+	public static WebElement Job;
+	
+	@FindBy(xpath="//a[normalize-space()='Pay Grades']")
+	public static WebElement Paygrades;
+	
+	@FindBy(xpath="//button[normalize-space()='Add']")
+	public static WebElement Add;
+	
+	@FindBy(xpath="//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@class='oxd-input oxd-input--active']")
+	public static WebElement name1;
+}
+
+
+
+PAGE OBJECT MODEL AMAZON AND FLIPKART========
+A)AMAZON OPEN PAGE===
+package basepage;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class Amazonopen 
+{
+	WebDriver driver;
+	
+	public Amazonopen(WebDriver driver) {                                      //(this )indicate which driver is that we mentioned
+		this.driver = driver;
+	}
+	
+	public void open() {
+		driver.get("https://www.amazon.in/");                                  //this is amazon URL
+	}
+	public void searchForProduct(String ProductName) {                        //here we are passing string value as product name
+		WebElement searchbox=driver.findElement(By.id("twotabsearchtextbox"));//using webelement keyword declaring one searchbox as variable in side variable stroing searchbox URL
+		searchbox.sendKeys(ProductName);                                      //here only declaring variable a productname
+		driver.findElement(By.id("nav-search-submit-button")).click();        //it is click enter
+		System.out.println("Amazon Executed Successfully");
+	}
+
+}
+
+B)AMAZON TO FLIPKART=======
+package basepage;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class AmazonToFlipkart 
+{
+	public WebDriver driver;
+	
+	public  AmazonToFlipkart(WebDriver driver) {                              //(this )indicate which driver is that we mentioned
+		this.driver = driver;
+	}
+	
+	public void open() {
+		driver.get("https://www.flipkart.com/");
+	}
+	public void searchForProduct(String productName) {                        //here we are passing string value as product name
+		WebElement searchbox = driver.findElement(By.name("q"));              //using webelement keyword declaring one searchbox as variable in side variable stroing searchbox URL
+		searchbox.sendKeys(productName);                                      //here only declaring variable a productname
+		driver.findElement(By.xpath("//button[@type='submit']//*[name()='svg']")).click();
+		System.out.println("Flipkart Executed Successfully");
+	}	
+}
+
+
+
+C)BOTH IN ONE INTO ANOTHER PACKAGE====
+package testpage;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import basepage.Amazonopen;                     //here we are imported classes nameas (packagename.classname)
+import basepage.AmazonToFlipkart;                //same here imported classes name(packagename.classname)
+public class Test 
+{
+	public static void main(String[] args) {        //here in main method we are creating driver as object chromedriver
+		WebDriver driver =new ChromeDriver();
+		
+		Amazonopen amazonHomePage=new Amazonopen(driver);         //it is amazon class name under that we are created object as(amazonHomePage)
+		amazonHomePage.open();                                   //here it is open command
+		amazonHomePage.searchForProduct("Shoes");                  //here passing the value of amazona (shoes)
+		
+		
+		AmazonToFlipkart flipkarthomePage=new AmazonToFlipkart(driver);//it is class name under that we have created object as (flipkarthomePage)
+		flipkarthomePage.open();                                     //here it is open command
+		flipkarthomePage.searchForProduct("shoes");                    //here passing the value of amazontoflipkart (shoes)
+		System.out.println("program executed Successfully");
+		
+		driver.quit();
+	}
+}
+
+
+DATA DRIVEN FRAMEWORK===================================================================================================
+A)
+package datadrivenFramework;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
+
+public class Login {
+	
+	WebDriver driver;
+	
+	String [][]data=null;//here given has null because we are initaliseing
+	
+	@DataProvider(name="loginData")
+	public String[][] loginDataProvider() throws BiffException, IOException {//method name is loginDataProviderit is in string
+		data=getExcelData();//we will get the Excel data
+		return data;//data will return
+	}
+
+	private String[][] getExcelData()throws BiffException,IOException {
+		//get Excel file from the root
+		String filepath=System.getProperty("user.dir") + "/TestData.xls";//it is path of our file saved in file path
+		FileInputStream excel=new FileInputStream(filepath);//our file path will be stored in excel object
+		
+		Workbook workbook=Workbook.getWorkbook(excel);//workbook is used to get excel workbook
+		Sheet sheet=workbook.getSheet(0);//it is sheet number in excel workbook
+		
+		 int rowCount =sheet.getRows();//row=5
+		 int columnCount = sheet.getColumns();//column=2
+		 
+		 String testData[][] = new String[rowCount-1][columnCount]; //4*2
+		for(int i=1;i<rowCount;i++) {//row
+			for(int j=0;j<columnCount;j++) {
+				testData[i-1][j]=sheet.getCell(j,i).getContents();
+			}
+		}
+		  
+		return testData;
+	}
+	
+	@BeforeTest
+	public void beforeTest() {
+		WebDriverManager.chromedriver().setup();
+		driver=new ChromeDriver();
+		driver.manage().window().maximize();
+	}
+	
+	@Test(dataProvider="loginData")
+	
+	public void loginApplication(String uName,String pword) throws InterruptedException {
+		driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		WebElement username=driver.findElement(By.name("username"));
+		username.sendKeys(uName);
+		WebElement password=driver.findElement(By.name("password"));
+		username.sendKeys(pword);
+		
+		WebElement loginButton=driver.findElement(By.xpath("//button[normalize-space()='Login']"));
+		loginButton.click();
+	
+		driver.findElement(By.xpath("//li[@class='oxd-userdropdown']")).click();
+		driver.findElement(By.xpath("//a[normalize-space()='Logout']")).click();
+        Thread.sleep(1000);
+		
+}
+	@AfterTest
+	public void afterTest() {
+		driver.quit();
+	}
+}
+
+B) CONVERT THIS PACKAGE INTO XML FILE=========
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+  <test thread-count="5" name="Test">
+    <classes>
+      <class name="datadrivenFramework.Login"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
+
+
+CUCUMBER FRAMEWORK=================================================================================================
+A)(ONE PACKAGE)==
+Feature:Letcode application demo
+
+Scenario Outline: Login should be success
+Given User navigate the letcode application
+And User click login button
+And User login into the application with "<username>" and "<password>"
+When User click login 
+Then Login should be successfully
+
+Examples:
+   |      username         ||      password         |
+   | vanitha12@gmail.com   ||      vani123          |
+   | rahulq1@gmail.com     ||      rabhu123         |
+   | yoge123@gmail.com     ||      yoo@1123         |
+   
+
+B)(ONE PACKAGE)
+package testRunner;
+
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+import io.cucumber.testng.CucumberOptions;
+import io.cucumber.testng.CucumberOptions.SnippetType;
+
+@CucumberOptions(
+		features = {"src/test/java/feature/loginExample.feature"},  //it is the location of the file 
+		dryRun = !true,                                      
+		glue = "steps",                                        
+		snippets = SnippetType.CAMELCASE,                     //the method will be in campelcase means first letter will be small and remaining first letter will be big                      
+		monochrome = false,                                   //console window will be in color                                    
+		plugin = {"pretty","json:target/cucumber-report.json"} //this program will get saved in target file 
+		
+		)
+public class Runner extends AbstractTestNGCucumberTests{
+
+}
+
+C)(ONE PACKAGE)
+package steps;
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+//import org.openqa.selenium.edge.EdgeDriver;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+public class LoginExamplesteps {
+	
+	WebDriver driver;
+	String url="https://letcode.in/";
+	
+	
+	
+	@Given("User navigate the letcode application")
+	public void userNavigateTheLetcodeApplication() {
+	    driver=new ChromeDriver();
+	    driver.manage().window().maximize();
+	    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20)); 
+	    driver.get(url);
+	}
+	@Given("User click login button")
+	public void userClickLoginButton() {
+		driver.findElement(By.xpath("//a[normalize-space()='Log in']")).click();
+		
+	}
+	@Given("User login into the application with {string} and {string}")
+	public void userLoginIntoTheApplicationWithAnd(String username, String password) throws InterruptedException {
+	   driver.findElement(By.name("email")).sendKeys(username);
+	   driver.findElement(By.name("password")).sendKeys(password);
+	   Thread.sleep(1000);
+	   
+	}
+	@When("User click login")
+	public void userClickLogin() {
+	   driver.findElement(By.xpath("//button[normalize-space()='LOGIN']")).click();
+	   
+	}
+	@Then("Login should be successfully")
+	public void loginShouldBeSuccessfully() throws InterruptedException {
+	   System.out.println("Login Successful Completed...");
+	   Thread.sleep(1000);
+	   driver.quit();
+	}
+}

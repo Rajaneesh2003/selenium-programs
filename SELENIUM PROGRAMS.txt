@@ -1,0 +1,999 @@
+MOUSEOVERACTION============================================================================================================
+
+package actions;
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+public class MouseOver {
+	public static void main(String[] args) throws InterruptedException {
+		//WebDrivenManager is a tool used to automatically download and manage browser driven(like chrome ,firefox)
+		//ChromeDriven()specifies that we  are using chrome as browser for testing
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driven=new ChromeDriver();
+		//maximize the browser window
+		driven.manage().window().maximize();
+		//set the url
+		driven.get("https:opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+		driven.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+		driven.findElement(By.name("username")).sendKeys("Admin");
+		Thread.sleep(4000);
+		driven.findElement(By.name("password")).sendKeys("admin123");
+		Thread.sleep(4000);
+		driven.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div/div[1]/div/div[2]/div[2]/form/div[3]/button")).click();//login
+		Thread.sleep(4000);
+		driven.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[1]/aside/nav/div[2]/ul/li[1]")).click();//Admin
+		Thread.sleep(4000);
+		driven.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[1]/header/div[2]/nav/ul/li[2]")).click();//job
+		Thread.sleep(4000);
+		driven.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[1]/header/div[2]/nav/ul/li[2]/ul/li[2]")).click();//paygrades
+		Thread.sleep(4000);
+		driven.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/div[1]/div/button")).click();//add
+		Thread.sleep(4000);
+		driven.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[1]/div/div/div/div[2]/input")).sendKeys("Rajaneesh");//name
+		Thread.sleep(4000);
+		driven.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[2]/button[2]")).click();
+		Thread.sleep(4000);
+		driven.quit();//it will quit whole chrome or whole driver will get quit
+		
+	}
+
+}
+
+MOUSERIGHTCLICK ACTION===================================================================================================
+
+package actions;
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import io.github.bonigarcia.wdm.WebDriverManager;
+public class MouseRightClick {
+	public static void main(String[] args) throws InterruptedException{
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://swisnl.github.io/jQuery-contextMenu/demo.html");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+		Actions act=new Actions(driver);                                               //importing action class //act is object name
+		
+		WebElement button=driver.findElement(By.xpath("/html/body/div/section/div/div/div/p/span"));//button is used to store the xpath(of right click)
+		Thread.sleep(4000);
+		
+		act.contextClick(button).build().perform();                                 //right click method code
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("/html/body/ul/li[1]/span")).click();//xpath of edit
+		Thread.sleep(1000);
+		System.out.println("Alert Content :"+driver.switchTo().alert().getText());  //alert content to get console window// switch to alert window//get the content
+		Thread.sleep(1000);
+		driver.switchTo().alert().accept();//okay-accept(),cancle-dismiss()
+		Thread.sleep(1000);
+
+		act.contextClick(button).build().perform();//rightclick method name is contextClick //build means compile//perform means run
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("/html/body/ul/li[2]")).click();//xpath for cut
+		Thread.sleep(1000);
+		System.out.println("Alert Content :"+driver.switchTo().alert().getText());//alert content is used to get console window// switch to alert window//get the content
+		Thread.sleep(1000);
+		driver.switchTo().alert().accept();//okay-accept(),cancle-dismiss()
+		Thread.sleep(1000);
+		
+		act.contextClick(button).build().perform();
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("/html/body/ul/li[3]")).click(); //xpath of copy
+		Thread.sleep(1000);
+        System.out.println("Alert Content :"+driver.switchTo().alert().getText());
+		Thread.sleep(1000);
+		driver.switchTo().alert().accept();
+		Thread.sleep(1000);
+
+		act.contextClick(button).build().perform();//rightclick method name is contextClick //build means compile//perform means run
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("/html/body/ul/li[5]")).click();//xpath for delete
+		Thread.sleep(1000);
+		System.out.println("Alert Content :"+driver.switchTo().alert().getText());//alert content is used to get console window// switch to alert window//get the content
+		Thread.sleep(1000);
+		driver.switchTo().alert().accept();//okay-accept(),cancle-dismiss()
+		Thread.sleep(1000);
+		
+		act.contextClick(button).build().perform();
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("/html/body/ul/li[4]")).click(); //xpath of paste
+		Thread.sleep(1000);
+		System.out.println("Alert Content :"+driver.switchTo().alert().getText());
+		Thread.sleep(1000);
+		driver.switchTo().alert().accept();
+		Thread.sleep(1000);
+		
+		driver.quit();//it will quit whole chrome or whole driver will get quit
+		
+	}
+
+}
+
+
+SCROLLUP AND DOWN=============================================================================================================
+
+package actions;
+import java.time.Duration;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+public class ScrollUpandDown {
+		public static void main(String[] args) throws InterruptedException {
+			WebDriverManager.chromedriver().setup();
+			ChromeDriver driver=new ChromeDriver();
+			driver.manage().window().maximize();
+			driver.get("https://www.amazon.in/");
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+			JavascriptExecutor js=(JavascriptExecutor) driver;//javascriptexecutor allow u to execute javascript code  within context on the current browser window  it is used to perform scrolling action within browser wnindow 
+			
+			js.executeScript("window,scrollBy(0, 4000)", "");// executeScript used to run javascript code //0 means start 4000 means end
+			Thread.sleep(2000);
+			js.executeScript("window,scrollBy(0, -4000)", "");
+			Thread.sleep(2000);
+			
+			js.executeScript("window.scrollTo(0,document.body.scrollHeight)");// //dead end of the document
+			Thread.sleep(2000);
+		    driver.quit();
+
+	}
+
+}
+
+
+SLIDER PROGRAM=========================================================================================================
+
+package actions;
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Slider {
+	public static void main(String[] args) throws InterruptedException {
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://jqueryui.com/slider/");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+		driver.switchTo().frame(0);//we are working on frame so frame is used
+		WebElement slider=driver.findElement(By.xpath("//*[@id=\"slider\"]/span"));//it is xpath of slider button (named:Slider)
+		
+		Actions act=new Actions(driver);//this code is used for mouse action
+		act.moveToElement(slider).dragAndDropBy(slider,1000,0).build().perform();//this code is used for moving the slider from (X=100,Y=0)
+		Thread.sleep(3000);
+		
+		act.moveToElement(slider).dragAndDropBy(slider,-1000,0).build().perform();//this code is used for moving the slider from (X=-100,Y=0)
+		Thread.sleep(3000);
+
+		
+		driver.quit();
+		
+	}
+
+}
+
+
+UPLOADFILES=================================================================================================================
+
+package actions;
+
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class UploadFiles {
+	public static void main(String[] args) throws InterruptedException {
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://omayo.blogspot.com/");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+		JavascriptExecutor js= (JavascriptExecutor) driver;//javascriptexecutor allow u to execute javascript code  within context on the current browser window  it is used to perform scrolling action within browser wnindow 
+		js.executeScript("window,scrollBy(0 , 1500)", "");//scrolling down the page
+		Thread.sleep(2000);
+		
+		//driver.findElement(By.id("uploadfile")).sendKeys("C:\\SOFTWARE TESTING\\.photo");
+		Thread.sleep(2000);
+		//how to get of the project?
+		String projectPath = System.getProperty("user.dir");//Retrive the path of the project
+		driver.findElement(By.id("uploadfile")).sendKeys(projectPath + "\\image\\download.png");//uploading the file inside the from the project
+		Thread.sleep(2000);
+		
+		driver.quit();
+
+		
+	}
+
+}
+
+
+LOCATORXPATH=========================================================================================================
+
+package actions;
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+public class LocatorXpath {
+	public static void main(String[] args) {
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://www.amazon.in/");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+		//Absolute xpath
+		//driver.findElement(By.xpath("//*[@id=\"twotabsearchtextbox\"]")).sendKeys("fucking toys");
+		//driver.findElement(By.xpath("//*[@id=\"nav-search-submit-button\"]")).click();
+		
+		//Relative Xpath
+		//driver.findElement(By.xpath("//input[@id='twotabsearchtextbox']")).sendKeys("fucking toys");
+		//driver.findElement(By.xpath("//input[@id='nav-search-submit-button']")).click();
+		
+		//Xpath with or= one of the valu it will execpt
+		//driver.findElement(By.xpath("//input[@id='twotabsearchtextbox' or @role='searchbox']")).sendKeys("fucking toys");
+		//driver.findElement(By.xpath("//input[@id='nav-search-submit-button'  or @type='submit']")).click();
+		
+		//Xpath with and= it should be correct from both 
+		//driver.findElement(By.xpath("//input[@id='twotabsearchtextbox' and @placeholder='Search Amazon.in']")).sendKeys("fucking toys");
+		//driver.findElement(By.xpath("//input[@id='nav-search-submit-button' and @type='submit']")).click();
+		
+		//xpath with contains()=if one of the sentence is there then it will execpt
+		//driver.findElement(By.xpath("//input[contains(@id,'searchtextbox')]")).sendKeys("fucking toys");
+		//driver.findElement(By.xpath("//input[contains(@id,'nav-search')]")).click();
+		
+		//xpath with starts-with()
+		//driver.findElement(By.xpath("//input[starts-with(@id, 'twotab')]")).sendKeys("fucking toys");
+		//driver.findElement(By.xpath("//input[starts-with(@id, 'nav-search')]")).click();
+		
+		//xpath with text()= only texting the module name
+		//driver.findElement(By.xpath("//a[text()='Sell']")).click();
+		
+		//xpath with chained xpath
+		driver.findElement(By.xpath("//div['nav-tools']//a[2]")).click();
+		
+		driver.quit();
+	}
+
+}
+
+
+HYPERLINK================================================================================================================
+
+package actions;
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class HyperLink {
+	public static void main(String[] args) throws InterruptedException {
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://omayo.blogspot.com/");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+		//driver.findElement(By.xpath("//*[@id=\"link1\"]")).click();//clicking the hyper link using normal click method-1 way
+		
+		JavascriptExecutor js=(JavascriptExecutor)driver;
+		js.executeScript("arguments[0].click();", driver.findElement(By.id("link1")));//another method for hyperlink using javascript
+		Thread.sleep(3000);
+		
+		driver.quit();
+		
+	}
+
+}
+
+
+DROPDOWN ===========================================================================================================
+
+package actions;
+import java.time.Duration;
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import io.opentelemetry.exporter.logging.SystemOutLogRecordExporter;
+
+public class DropDown {
+	public static void main(String[] args) {
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://letcode.in/dropdowns");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		//single Selection
+		WebElement fruits=driver.findElement(By.id("fruits"));//Single Selection
+		Select myfruits=new Select(fruits);//select class handle dropdown
+		//myfruits.selectByVisibleText("Banana");
+		//myfruits.selectByIndex(3);
+		//myfruits.selectByValue("2");
+		
+		List<WebElement> allfruits= myfruits.getOptions();
+		allfruits.forEach(i -> System.out.println(i.getText()));
+		
+		//Multiple Selection
+		WebElement heros=driver.findElement(By.id("superheros"));
+		Select myheros = new Select(heros); //select handle heros 
+		 
+		//the isMultiple()method returns boolean indication weather the dropdown allow multiple selection
+		boolean isMul=myheros.isMultiple();//selecting heros
+		System.out.println("is multipl selection :"+isMul);
+		myheros.selectByIndex(1);
+		myheros.selectByValue("ta");
+		myheros.selectByVisibleText("Batman");
+		//myheros.deselectByIndex(1);
+		
+		List<WebElement> allheros =myheros.getAllSelectedOptions();
+		System.out.println("Selected heros");
+		for(WebElement hero : allheros) {
+			System.out.println(hero.getText());
+		}
+		
+		
+		WebElement java=driver.findElement(By.id("lang"));//selecting programming language
+		Select myjava=new Select(java);
+		//myjava.selectByIndex(4);
+		myjava.selectByVisibleText("Python");
+		List<WebElement> alljava=myjava.getOptions();//is to list all select option in console windoww
+		alljava.forEach(i -> System.out.println(i.getText()));
+		
+		WebElement countrys=driver.findElement(By.id("country"));//selecting programming language
+		Select mycountry=new Select(countrys);
+		//myjava.selectByIndex(4);
+		mycountry.selectByVisibleText("Colombia");
+		List<WebElement> allcountry=mycountry.getOptions();//is to list all select option in console window
+		allcountry.forEach(i -> System.out.println(i.getText()));
+		
+		
+	}
+
+}
+
+
+DRAGDROP program=========================================================================================================
+
+package actions;
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class DragAndDrop {
+	public static void main(String[] args) throws InterruptedException {
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("http://www.dhtmlgoodies.com/scripts/drag-drop-custom/demo-drag-drop-3.html");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+		Actions act=new Actions(driver);//mouse action code
+		
+		WebElement source=driver.findElement(By.id("box3"));// its id name washington
+		WebElement target=driver.findElement(By.id("box103"));// its id name is united state
+		
+		//act.clickAndHold(source).moveToElement(target).release().build().perform();
+	    act.dragAndDrop(source, target).build().perform();//drag and drop formula
+	    Thread.sleep(2000);
+	    
+	    WebElement source1=driver.findElement(By.id("box1"));// its id name osola
+		WebElement target1=driver.findElement(By.id("box101"));// its id name is norway
+		
+		//act.clickAndHold(source).moveToElement(target).release().build().perform();
+	    act.dragAndDrop(source1, target1).build().perform();//drag and drop formula
+	    Thread.sleep(2000);
+	    
+	    WebElement source2=driver.findElement(By.id("box2"));// its id name stock 
+		WebElement target2=driver.findElement(By.id("box102"));// its id name is sweden
+		
+		//act.clickAndHold(source).moveToElement(target).release().build().perform();
+	    act.dragAndDrop(source2, target2).build().perform();//drag and drop formula
+	    Thread.sleep(2000);
+	    
+	    WebElement source3=driver.findElement(By.id("box5"));// its id name souel 
+		WebElement target3=driver.findElement(By.id("box105"));// its id name is southkorea
+		
+		//act.clickAndHold(source).moveToElement(target).release().build().perform();
+	    act.dragAndDrop(source3, target3).build().perform();//drag and drop formula
+	    Thread.sleep(2000);
+	    
+	    WebElement source4=driver.findElement(By.id("box6"));// its id name rome
+		WebElement target4=driver.findElement(By.id("box106"));// its id name is itealy
+		
+		//act.clickAndHold(source).moveToElement(target).release().build().perform();
+	    act.dragAndDrop(source4, target4).build().perform();//drag and drop formula
+	    Thread.sleep(2000);
+	    
+	    WebElement source5=driver.findElement(By.id("box4"));// its id name madrid
+		WebElement target5=driver.findElement(By.id("box104"));// its id name is spain
+		
+		//act.clickAndHold(source).moveToElement(target).release().build().perform();
+	    act.dragAndDrop(source5, target5).build().perform();//drag and drop formula
+	    Thread.sleep(2000);
+	    
+	    WebElement source6=driver.findElement(By.id("box7"));// its id name stock 
+		WebElement target6=driver.findElement(By.id("box107"));// its id name is sweden
+		
+		//act.clickAndHold(source).moveToElement(target).release().build().perform();
+	    act.dragAndDrop(source6, target6).build().perform();//drag and drop formula
+	    Thread.sleep(2000);
+	    driver.quit();
+	}
+
+}
+
+
+CSS SELECTOR================================================================================================================
+
+package actions;
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class CssSelector {
+	public static void main(String[] args) {
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://www.facebook.com/");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+		//Tag and id=(#id (or) tag#id)
+		//driver.findElement(By.cssSelector("#email")).sendKeys("rajaneesh9643@gmail.com");
+		//driver.findElement(By.cssSelector("input#email")).sendKeys("rajaneesh9643@gmail.com");
+		
+		//tag and class=(Tag.class)
+		//driver.findElement(By.cssSelector("input.inputtext")).sendKeys("rajaneesh9643@gmail.com");
+		
+		//Tag and Attribute=(Tag[attribute=value]
+		//driver.findElement(By.cssSelector("input[data-testid=royal_email]")).sendKeys("rajaneesh9643@gmail.com");
+		
+		//tag,id,attribute=(Tag.class[attribute=value]
+		driver.findElement(By.cssSelector("input.inputtext[name=email]")).sendKeys("rajaneesh9643@gmail.com");
+		driver.findElement(By.cssSelector("#pass")).sendKeys("ranju1234");
+		
+		driver.findElement(By.xpath("//*[@id=\"u_0_5_JF\"]")).click();
+			
+	}
+
+}
+
+
+CHECKBOX==========================================================================================================
+
+package actions;
+import java.time.Duration;
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Checkbox {
+	public static void main(String[] args) throws InterruptedException {
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://testautomationpractice.blogspot.com/");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+		JavascriptExecutor js=(JavascriptExecutor) driver;//javascriptexecutor allow u to execute javascript code  within context on the current browser window  it is used to perform scrolling action within browser wnindow 
+		
+		js.executeScript("window,scrollBy(0, 500)", "");// executeScript used to run javascript code //0 means start 4000 means end
+		Thread.sleep(2000);
+		
+		//driver.findElement(By.id("male")).click();
+		driver.findElement(By.id("female")).click();//This is for single radio box
+		
+		//1) Select specific checkBox
+		//driver.findElement(By.id("monday")).click();
+		
+		//2) Select all the check box
+		 List<WebElement>checkboxes = driver.findElements(By.xpath("//input[@type='checkbox' and contains(@id,'day')]"));
+		 System.out.println("Total no of Checkboxes :" +checkboxes.size() );
+		 //using for loop
+		// for(int i=0; i<checkboxes.size(); i++) {
+			// checkboxes.get(i).click(); 
+		// }
+		 //using for eachloop
+		// for(WebElement chbox :checkboxes ){
+			// chbox.click();
+		// }
+		 
+		// 3)selecting multiple boxes by choice
+		 	//I want to select Monday and Saturday
+		// for(WebElement chbox : checkboxes) {
+			// String checkboxname = chbox.getAttribute("id");
+			// if(checkboxname.equals("tuesday")||checkboxname.equals("thursday")) { 
+			// chbox.click();
+			// }
+		// } 	 
+		 
+		 //4)Selecting last two checkbox
+		 //Total no of checkboxes - no of checkbox you want to  select= starting index
+		 //7-2=5(index no)
+		 int totalCheckBoxes = checkboxes.size();
+		 for(int i=totalCheckBoxes-2;i<totalCheckBoxes;i++ ) {
+			 checkboxes.get(i).click();
+		 }
+		 //5)Selecting first 2 checkboxes
+		 for( int i=0; i<totalCheckBoxes; i++) {
+			 if(i<2) {
+				 checkboxes.get(i).click();
+			 }
+		 }
+		 
+		 
+	}
+
+}
+
+
+ALERT DEMO=================================================================================================================
+
+package Alert;
+import java.time.Duration;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class AlertDemo {
+	public static void main(String[] args) throws InterruptedException {
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://letcode.in/alert");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+		driver.findElement(By.id("accept")).click();//single Alert
+		Alert alert1=driver.switchTo().alert();//switching to alert window
+		String text= alert1.getText();//to see the alert window
+		Thread.sleep(2000);
+		System.out.println(text);//getting the text
+		alert1.accept();//accepting the alert by  clicking ok button
+		
+		driver.findElement(By.id("confirm")).click();//single alert
+		Alert alert2=driver.switchTo().alert();
+		String text1=alert2.getText();
+		Thread.sleep(2000);
+		System.out.println(text1);
+		//alert2.accept();
+		alert2.dismiss();
+		
+		//Prompt Window
+		driver.findElement(By.id("prompt")).click();
+		Alert alert3=driver.switchTo().alert();
+		alert3.sendKeys("ranju");
+		Thread.sleep(2000);
+		alert3.accept();
+		String name=driver.findElement(By.id("myName")).getText();
+		System.out.println("name");  
+		Thread.sleep(2000);
+		driver.quit();
+
+	
+}
+
+}
+
+FRAMEDEMO==================================================================================================================
+
+package frame;
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Framedemo {
+	public static void main(String[] args) throws InterruptedException {
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://letcode.in/frame");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+         JavascriptExecutor js=(JavascriptExecutor) driver;//javascriptexecutor allow u to execute javascript code  within context on the current browser window  it is used to perform scrolling action within browser wnindow 
+		
+		js.executeScript("window,scrollBy(0, 150)", "");// executeScript used to run javascript code //0 means start 4000 means end
+		Thread.sleep(2000);
+		
+		
+		//driver.switchTo().frame(0);//using Index
+		WebElement myframe =driver.findElement(By.id("firstFr"));//using xpath or ID//for outerframe
+		driver.switchTo().frame(myframe);
+		
+		//driver.switchTo().frame("firstFr");//directly gave ID
+		
+		driver.findElement(By.xpath("//input[@name='fname']")).sendKeys("ragavandra");
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//input[@name='lname']")).sendKeys("Rajkumar");
+		Thread.sleep(2000);
+
+		WebElement myframe2=driver.findElement(By.xpath("//iframe[@class='has-background-white']"));
+		driver.switchTo().frame(myframe2);//this frame is for innerframe
+		driver.findElement(By.name("email")).sendKeys("rana@gmail.com");
+		Thread.sleep(2000);
+		
+		driver.switchTo().parentFrame();//this is for parent frame
+		driver.switchTo().defaultContent();//this is used to go for main page
+		
+		driver.findElement(By.xpath("//a[normalize-space()='Watch tutorial']")).click();
+		Thread.sleep(2000);
+		driver.quit();
+              
+	
+		
+		
+		
+	}
+
+}
+
+KEYBOARD (1) ===============================================================================================================
+
+package keyboard;
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Hello {
+	public static void main(String[] args) throws AWTException, InterruptedException {
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.navigate().to("https://www.google.com/");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+		Robot robot=new Robot();
+		//it is used to search anything without keyboard usage
+		WebElement search=driver.findElement(By.name("q"));//it is path of search
+		search.click();
+		robot.delay(500);//it is code for some delay
+		
+		robot.keyPress(KeyEvent.VK_H);//it is H
+		robot.keyRelease(KeyEvent.VK_H);
+		Thread.sleep(500);
+		
+		robot.keyPress(KeyEvent.VK_E);//E
+		robot.keyRelease(KeyEvent.VK_E);
+		Thread.sleep(500);
+		
+		robot.keyPress(KeyEvent.VK_L);//L
+		robot.keyRelease(KeyEvent.VK_L);
+		Thread.sleep(500);
+		
+		robot.keyPress(KeyEvent.VK_L);//L
+		robot.keyRelease(KeyEvent.VK_L);
+		Thread.sleep(500);
+		
+		robot.keyPress(KeyEvent.VK_O);//o
+		robot.keyRelease(KeyEvent.VK_O);
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
+		Thread.sleep(2000);
+		
+		driver.quit();
+	}
+
+}
+
+KEYBOARD(2)===============================================================================================================
+
+package keyboard;
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Keypass {
+	public static void main(String[] args) throws InterruptedException, AWTException {
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.navigate().to("https://www.edureka.co/");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+		driver.findElement(By.linkText("Courses")).click();
+		Thread.sleep(1000);
+		
+		Robot robot= new Robot();//it is action code of keyboard
+		robot.keyPress(KeyEvent.VK_DOWN);//it is down arrow action
+		Thread.sleep(1000);
+		
+		robot.keyPress(KeyEvent.VK_TAB);//it is TAB1
+		Thread.sleep(1000);
+		System.out.println("Click TAB 1");
+
+		robot.keyPress(KeyEvent.VK_TAB); //it is YAB2
+		Thread.sleep(1000);
+		System.out.println("Click TAB 2");
+		
+		robot.keyPress(KeyEvent.VK_TAB); //it is TAB3
+		robot.keyPress(KeyEvent.VK_ENTER);//it is to click ENTER
+		robot.keyRelease(KeyEvent.VK_ENTER);//it is to release ENTER button
+		Thread.sleep(1000);
+		System.out.println("Click TAB 3");
+		Thread.sleep(1000);
+
+		driver.quit();	
+		
+	}
+
+}
+
+
+NAVIGATION ===================================================================================================================
+
+package navigation;
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class NavigationDemo {
+	public static void main(String[] args) throws InterruptedException {
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.navigate().to("https://www.amazon.in/");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+		//get current page URL
+		String url=driver.getCurrentUrl();
+		System.out.println("Home Page URL:" +url); 
+		Thread.sleep(2000);		
+		
+		//todays deal
+		driver.navigate().to("https://www.amazon.in/events/blackfriday?ref_=nav_cs_gb&discounts-widget=%2522%257B%255C%2522state%255C%2522%253A%257B%255C%2522refinementFilters%255C%2522%253A%257B%257D%257D%252C%255C%2522version%255C%2522%253A1%257D%2522");
+		String todayurl=driver.getCurrentUrl();
+		System.out.println("Today url :" +todayurl);
+		Thread.sleep(2000);
+		
+		driver.navigate().back();//back  amazon home page
+		Thread.sleep(2000);
+         
+		//Mobiles
+		driver.navigate().to("https://www.amazon.in/mobile-phones/b/?ie=UTF8&node=1389401031&ref_=nav_cs_mobiles");
+		String todayurl1=driver.getCurrentUrl();
+		System.out.println("Today url :" +todayurl);
+		Thread.sleep(2000);
+		
+		driver.navigate().back();//back to amazon home page
+		Thread.sleep(2000);
+
+		driver.navigate().forward();
+		Thread.sleep(2000);
+
+		driver.navigate().refresh();
+		Thread.sleep(2000);
+
+		driver.quit();
+				
+	}
+
+}
+
+CAPTURE SCREENSHOT=========================================================================================================
+
+package screenshot;
+import java.io.File;
+import java.io.IOException;
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.io.FileHandler;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class CaptureScreenshot {
+	public static void main(String[] args) throws IOException {
+			WebDriverManager.chromedriver().setup();
+			ChromeDriver driver=new ChromeDriver();
+			driver.manage().window().maximize();
+			driver.navigate().to("https://letcode.in/buttons");
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+			
+			//Full page Screenshot
+			File firstScr=driver.getScreenshotAs(OutputType.FILE);//this is code for  capture screenshot and store it as file
+			File dest= new File("./screenshot/image1.png");//it is destination of file where it will get saved
+			FileHandler.copy(firstScr, dest);//it will copy from firstSrc to destination
+			
+			//Screenshot only button
+			WebElement button = driver.findElement(By.id("home"));//it will take screenshot of particular button
+			File firstSrc1=button.getScreenshotAs(OutputType.FILE);
+			File dest1= new File("./screenshot/image2.png");
+			FileHandler.copy(firstSrc1, dest1);
+			
+			//Screenshot of particular section
+			WebElement info =driver.findElement(By.className("content")); //it will take screenshot of particular section
+			File firstScr2=info.getScreenshotAs(OutputType.FILE);
+			File dest2=new File("./screenshot/image3.png");
+			FileHandler.copy(firstScr2, dest2);
+
+	}
+	
+
+}
+
+
+WEBTABLE DEMO================================================================================================================
+
+package webtable;
+import java.time.Duration;
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class WebTableDemo {
+	public static void main(String[] args) throws InterruptedException {
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.navigate().to("https://letcode.in/table");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+		JavascriptExecutor js=(JavascriptExecutor) driver;//javascriptexecutor allow u to execute javascript code  within context on the current browser window  it is used to perform scrolling action within browser wnindow 
+		
+		js.executeScript("window,scrollBy(0,600)", "");// executeScript used to run javascript code //0 means start 4000 means end
+		Thread.sleep(2000);
+		//1) This code is for second table
+		WebElement table=driver.findElement(By.id("simpletable"));//it is table location
+		List<WebElement> headers=table.findElements(By.tagName("th")); //it is table head
+		
+		for(WebElement header:headers) {//here is will only show the table headers
+			String text=header.getText();
+			System.out.println(text);//getting the headers
+		}
+		
+		List<WebElement> allrows=table.findElements(By.cssSelector("tbody tr"));// it will show the element persent in the table inside body
+		int size=allrows.size();
+		System.out.println("Rows size:" +size);
+	    Thread.sleep(2000);
+		
+		
+		for(WebElement row : allrows ) {
+			List<WebElement> colum = row.findElements(By.tagName("td"));
+			WebElement firstColum=colum.get(1);
+			System.out.println(firstColum.getText());
+		}
+		//2) This Code is for second table
+		WebElement table1=driver.findElement(By.xpath("/html/body/app-root/app-simpletable/section[1]/div/div/div[1]/div/div/div/div[3]/div/table"));
+		List<WebElement> headers1=table1.findElements(By.tagName("th"));		
+		for(WebElement header1:headers1) {
+			String text=header1.getText();
+			System.out.println(text);
+		}
+		
+		List<WebElement> allrows1=table1.findElements(By.cssSelector("tr"));
+		int size1=allrows1.size();
+		System.out.println("Rows size:" +size1);
+		Thread.sleep(2000);
+		
+		
+		for(WebElement row : allrows1 ) {
+			List<WebElement> colum = row.findElements(By.tagName("td"));
+			WebElement firstColum=colum.get(5);
+			System.out.println(firstColum.getText());
+		}
+		
+		
+		
+	}
+
+}
+
+HANDLING WINDOW=========================================================================================================
+
+package windowhandling;
+import java.time.Duration;
+import java.util.Iterator;
+import java.util.Set;
+import org.openqa.selenium.WindowType;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class HandlingWindow {
+		public static void main(String[] args) throws InterruptedException {
+			WebDriverManager.chromedriver().setup();
+			ChromeDriver driver=new ChromeDriver();
+			driver.manage().window().maximize();
+			driver.get("https://letcode.in/frame");
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+			
+			String tab1=driver.getWindowHandle();	
+			System.out.println("Tab 1 name :"+tab1);
+			
+			driver.switchTo().newWindow(WindowType.TAB);//2)amazon page
+			driver.get("https://www.amazon.in/");
+			String tab2=driver.getWindowHandle();
+			System.out.println("tab 2 name :"+tab2);
+			
+			driver.switchTo().newWindow(WindowType.TAB);//3)orange page
+			driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+			String tab3=driver.getWindowHandle();
+			System.out.println("tab 3 name :"+tab3);
+			
+			driver.switchTo().newWindow(WindowType.TAB);//4)update page
+			driver.get("https://com-updateme.en.uptodown.com/android");
+			String tab4=driver.getWindowHandle();
+			System.out.println("tab 4 name :"+tab4);
+			
+			driver.switchTo().newWindow(WindowType.TAB);//5)vegamovies page
+			driver.get("https://vegamovies.ps/");
+			String tab5=driver.getWindowHandle();
+			System.out.println("tab 5 name :"+tab5);
+			
+			driver.switchTo().newWindow(WindowType.TAB);//6)flipkart page
+			driver.get("https://www.flipkart.com/");
+			String tab6=driver.getWindowHandle();
+			System.out.println("tab 6 name :"+tab6);
+			
+			Thread.sleep(2000);
+			
+			Set<String> tabs=driver.getWindowHandles();
+			Iterator<String> iterator=tabs.iterator();//iterator is used to show the tabs or anything one by one
+			while(iterator.hasNext()) {
+				driver.switchTo().window(iterator.next());
+				Thread.sleep(2000);
+
+			}
+			driver.switchTo().window(tab4);//update page
+			driver.close();
+			Thread.sleep(2000);
+			
+			driver.switchTo().window(tab2);
+			Thread.sleep(2000);
+			
+			driver.switchTo().window(tab6);
+			Thread.sleep(2000);
+			
+			driver.switchTo().window(tab2);
+            driver.close();
+			
+			driver.quit();
+			
+	}
+
+}
+
+
+
+
+
+

@@ -1,0 +1,787 @@
+INHERITANCES=======================================================================================================================================
+
+1) Hierichal inheritances===
+
+   A)package hirerachalinheritance;
+
+public class A {
+	public void father() {
+		System.out.println("Father name is matkaraa");
+		
+	}
+}
+
+
+B)package hirerachalinheritance;
+
+public class B extends A {
+	public void child1() {
+		System.out.println("child1 name is thika");	
+	}
+	public static void main(String[] args) {
+		B b1=new B();
+		b1.child1();
+		b1.father();
+	}
+}
+
+
+C)package hirerachalinheritance;
+
+public class C extends A{
+	public void child2() {
+		System.out.println("child2 name is rukumini");	
+	}
+	public static void main(String[] args) {
+		C c1=new C();
+		c1.child2();
+		c1.father();
+	}
+}
+
+
+D)package hirerachalinheritance;
+
+public class D extends A{
+	public void child3() {
+		System.out.println("child3 name is dhanush");	
+	}
+	public static void main(String[] args) {
+		D d1=new D();
+		d1.child3();
+		d1.father();
+	}
+}
+
+
+
+2)HYBRID INHERITANCES===================================================================================================================
+
+A)package hybride;
+
+public class A {
+	public void Grandfather() {
+		System.out.println("i am grandfather of father1 and father2");
+		
+	}
+}
+
+
+B)package hybride;
+
+public class B  extends A{
+	public void father1() {
+		System.out.println("I am first child of my father");	
+	}
+	public static void main(String[] args) {
+		B b1=new B();
+		b1.father1();
+		b1.Grandfather();
+	} 
+}
+
+C)package hybride;
+
+public class C extends A {
+	public void Father2() {
+		System.out.println("i am second child of father");	
+	}
+	public static void main(String[] args) {
+		C c1=new C();
+		c1.Father2();
+		c1.Grandfather();
+		
+	}
+}
+
+D)package hybride;
+
+public class D extends B {
+	public void child() {
+		System.out.println("i am child of father1");	
+	}
+	public static void main(String[] args) {
+		D d1=new D();
+		d1.child();
+		d1.father1();
+		d1.Grandfather();
+	}
+}
+
+3)MULTIPLE INHERITANCES===============================================================================================================
+
+A)package multiple;
+
+public interface Father {
+	String name ="Rakesha";
+	int age = 49;
+	int password =1234;	
+	public void dad();
+		
+}
+
+
+B)package multiple;
+
+public interface Mother {
+		String name1 ="Ranjithi";
+		int age1 = 45;
+		int password1 =5678;		
+	    public void mom() ;
+			
+}
+
+C)package multiple;
+
+public class Child implements Father,Mother {
+	@Override
+	public void mom() {
+		System.out.println("my mother name is :"+name1);
+		System.out.println("Age:"+age1);
+		System.out.println("password :"+password1);
+	}
+	@Override
+	public void dad() {
+		System.out.println("my father name :"+name);
+		System.out.println("Age :"+age);
+		System.out.println("Password :"+password);			
+	}
+	public static void main(String[] args) {
+		Child c1=new Child();
+		c1.mom();
+		c1.dad();			
+	}
+}
+
+
+ABSTRACTION===============================================================================================================
+
+// Abstract class
+  A)abstract class Animal {
+    // Abstract method (no body)
+    abstract void sound();
+
+    // Concrete method
+    void sleep() {
+        System.out.println("This animal sleeps.");
+    }
+}
+
+// Dog class extends Animal
+b)  class Dog extends Animal {
+    // Implement the abstract method
+    @Override
+    void sound() {
+        System.out.println("The dog says: Woof!");
+    }
+}
+
+// Main class
+C)public class Main {
+    public static void main(String[] args) {
+        // Create an object of Dog
+        Animal myDog = new Dog();
+
+        // Call the methods
+        myDog.sound(); // Abstract method
+        myDog.sleep(); // Concrete method
+    }
+}
+
+
+POLYMORPHISM=========================================================================================================================
+
+A) Compile time error (or) Method overloading====
+
+package poly;
+
+public class Compiletimeerror {
+	public void Sum(int a) {
+		System.out.println("Value:"+(a));
+	}
+		
+	public void Sum( int b,int c) {
+		System.out.println("Sum of :"+(b+c));
+
+    }
+	public void Sum( int d,int e,int f) {
+		System.out.println("sum of :"+(d+e+f));
+		
+	}
+	public static void main(String[] args) {
+		Compiletimeerror c1=new Compiletimeerror();
+		c1.Sum(19);
+		c1.Sum(20, 30);
+		c1.Sum(50, 40, 10);
+    }
+}
+
+
+B) run time error(or) method overridding
+
+1)package poly;
+
+public class Rumtimerror {
+	public void draw() {
+		System.out.println("drawing is an art");
+		
+	}
+
+}
+
+2)package poly;
+
+public class child extends Rumtimerror {
+	public void draw() {
+		super.draw();//we have used superkeyword soo we can access both the method
+		System.out.println("drawing is an art from ranju");
+
+    }
+	public static void main(String[] args) {
+		child c1=new child();
+		c1.draw();
+			
+	}
+}
+
+
+ENAPULATION ================================================================================================================================
+
+A)
+package Encapsulation;
+
+public class person {
+	private String name;
+	private int age;
+	
+	public String getName()
+	{return name;}
+	
+	public void setName(String name)
+	{this.name=name;}
+	
+	public int getAge()
+	{return age;}
+	
+	public void setAge(int age)
+	{this.age=age;}
+
+}
+
+
+B)package Encapsulation;
+
+public class Encap extends person {
+	public static void main(String[] args) {
+		person p1=new person();
+		
+		p1.setName("john");
+		p1.setAge(30);
+		System.out.println("Name :" +p1.getName());
+		System.out.println("Age :" +p1.getAge());
+	}
+
+}
+
+
+JUMPING STATEMENTS========================================================================================================
+
+A) BREAK STATEMENTS====
+package jumping;
+public class BreakDemo {
+	public static void main(String[] args) {
+		for(int i=0;i<=6;i++) {
+			if(i==5) {
+				break;
+			}System.out.println("i:"+i);
+		}
+		System.out.println("Loop completed");	   
+	}
+}
+
+
+B) CONTINUES STATEMENTS===
+package jumping;
+public class ContinueDemo {
+	public static void main(String[] args) {
+		for(int i=0;i<=10;i++) {
+			if(i==5 || i==7) {
+				continue;
+			}
+			System.out.println("i:"+i);
+		}
+	}
+}
+
+
+
+EXCEPTION HANDLING===========================================================================================================
+
+A)TRY AND CATCH ===
+package Exceptionhandling;
+
+public class TryNCatch {
+	public static void main(String[] args) {
+		int i=0;
+		int j=9;
+		
+		try {
+			System.out.println(j/i);
+		}
+		catch( Exception e){
+			System.out.println(e);
+		}
+		
+		System.out.println("Hello");
+		System.out.println("hello motherfucker");	
+	}
+}
+
+
+CONSTRUCTOR ================================================================================================================
+
+A)DEFAULT STATEMENTS===
+package constructor;
+
+public class DefaultConstructor {
+	//default constructor
+	DefaultConstructor(){
+		System.out.println("Default constructor is having no parameters");
+	}
+	public static void main(String[] args) {
+		new DefaultConstructor();
+	}
+}
+
+
+B)PARAMETERISED CONSTRUCTOR===
+package constructor;
+
+public class ParameterisedConstructors {
+	
+	int id;
+	String name;
+	
+	//Creating a parameterised constroctor
+	ParameterisedConstructors(int i,String n){
+		id=i;
+		name=n;
+    }
+	
+	//method to display values
+	public void display() {
+		System.out.println(id+" " +name);
+	}
+	public static void main(String[] args) {
+		//cresting object and passing the values
+		ParameterisedConstructors p1=new ParameterisedConstructors(112,"Ranju");
+		ParameterisedConstructors p2=new ParameterisedConstructors(111,"Ranasing");
+		
+		p1.display();
+		p2.display();	
+	}	
+}
+
+
+FILE OPERATIONS===========================================================================================================
+A) CREATING THE FILE===
+package FileOperation;
+import  java.io.File;
+public class CreatingNewFile {
+	public static void main(String[] args) {
+		try {
+			File f1=new File("C:\\eSupport\\File.txt");
+			if(f1.createNewFile()) {
+				System.out.println("File" +f1.getName() + " is created succesfully");
+			}
+			else {
+				System.out.println("file is already created");
+			}
+		}
+		catch(Exception e) {
+			System.out.println(e);
+			//e.printStackTrace();
+		}
+	}
+
+}
+
+
+B)WRITING THE INFO IN THE FILE=====
+package FileOperation;
+import java.io.FileWriter;
+import java.io.IOException;
+public class WritetoFile {
+	public static void main(String[] args) {
+		try {
+			FileWriter Fwrite=new FileWriter("C:\\eSupport\\File.txt");
+			//writing the content into the file
+			Fwrite.write("We noticed a new sign-in to your Google Account on a Redmi Note 10S device. If this was you, you don’t need to do anything. If not, we’ll help you secure your account.2826388644861366%$&$$^^");
+			//closing the file
+			Fwrite.close();
+			System.out.println("content is successfully wrote in the file");
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+
+C)READING FROM THE FILE====
+package FileOperation;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+public class ReadFromTheFile {
+	public static void main(String[] args) {
+		try {
+			File f1=new File("C:\\eSupport\\File.txt");
+			Scanner dataReader=new Scanner(f1);
+			
+			while(dataReader.hasNextLine()) {
+				String Filedata=dataReader.nextLine();
+				System.out.println(Filedata);
+			}
+			dataReader.close();
+		}
+		catch(FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+
+D)GETTING INFO FROM THE FILE=======
+package FileOperation;
+import java.io.File;
+public class GetFileInformation {
+	public static void main(String[] args) {
+		File f1=new File("C:\\eSupport\\File.txt");
+		if(f1.exists()) {
+			//Getting the dile name
+			System.out.println("The File Name :"+f1.getName());
+			//Getting the file path
+			System.out.println("The Absolute path :"+f1.getAbsolutePath());
+			//Checking weather file is readable or not?
+			System.out.println("Is this Readable :"+f1.canRead());
+			//checking wheather file is writable or not ?
+			System.out.println("Is thus writable :"+f1.canWrite());
+			//Getting the length of the file
+			System.out.println("the Size of the file :"+f1.length());
+		}
+		else {
+			System.out.println("The file does not Exist");
+		}
+	}
+}
+
+
+E)DELETING THE FILE========
+package FileOperation;
+
+import java.io.File;
+
+public class DeleteThefile {
+	public static void main(String[] args) {
+		File f1=new File("C:\\eSupport\\File.txt");
+		if(f1.delete()) {
+			System.out.println(f1.getName()+"This file deleted successfully");
+		}
+		else {
+			System.out.println("This File not found");
+		}
+	}
+}
+
+
+ARRAY IN JAVA=====================================================================================================================================
+A)SINGLE DIMENSION ARRAY=======
+package arraydemo;
+public class SingleDimensionArray {
+	public static void main(String[] args) {
+		int [] rollno= {45,56,67,34,45,64,34};
+		
+		for(int i:rollno) {
+			System.out.println(i);
+		}
+		System.out.println( "the length of the array "+rollno.length);
+	}
+}
+
+B)MULTI DIMENSION ARRAY==========
+package arraydemo;
+public class DemoMulti {
+	public static void main(String[] args) {
+              int arr[][]= {{1,2,5,6},{0,2,1,0},{9,3,0,0},{4,5,6,0},{9,0,0,0},{8,9,1,0}};
+		
+		//printing 2D array
+		for(int i=0;i<6;i++) {//row
+			for(int j=0;j<4;j++) {//column
+				System.out.print(arr[i][j] +" ");
+			}
+			System.out.println();
+		}
+	}
+}
+
+
+JAVA COLLECTION ===============================================================================================================
+A)LIST IN JAVA COLLECTION====
+
+package list;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+public class LinkedListDemo {
+	public static void main(String[] args) {
+		//List<String> name=new ArrayList<String>();
+		List<String> name=new LinkedList<String>();
+
+		name.add("Saraha");//adding the list	
+		name.add("Ranju");
+		name.add("Rohit");
+		name.add("Sahana");
+		name.add("shadul");
+		name.add("roopa");
+		name.add("Suru");
+		System.out.println(name);
+		
+		Collections.sort(name);//sorting list
+		
+		Iterator<String> itr=name.iterator();
+		while(itr.hasNext()) {
+			System.out.println(itr.next());
+		}
+		System.out.println(name);
+		boolean empty = name.isEmpty();
+		System.out.println("Is this list Empty :" +empty);//THIS WILL TELL WEATHER THIS LIST IS EMPTY OR NOT (TRUE OR FALSE)
+		System.out.println("get the first name :"+name.get(0));//THIS WILL DISPLAY THE 0TH POSITION NAME
+		boolean contains=name.contains("S");
+		System.out.println("Suru name is in the list :"+contains);//IT WILL DISPLAY THIS NAME IS THERE OR NOT
+		System.out.println("Removed Ranju :"+name.remove(1));//IT WILL REMOVE THAT NAME
+		System.out.println(name);
+		System.out.println("size :"+name.size());//IT WILL DISPLAY THE SIZE		
+	}
+}
+	
+B)SET IN JAVA COLLECTION=====
+  1)SET DEMO
+package set;
+
+import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
+
+public class SetDemo {
+	public static void main(String[] args) {
+		Set<String> s=new TreeSet<>();
+		
+		s.add("Manual");
+		s.add("Automayion");
+		s.add("Data");
+		s.add("c");
+		s.add("C++");
+		s.add("Manual");
+		s.add("Manga");
+		s.add("Man");
+		
+		System.out.println(s);
+		
+		Iterator<String> itr=s.iterator();
+		while(itr.hasNext()) {
+			System.out.println(itr.next());
+		}		
+	}
+}
+
+2) ITERATORLOOP
+package set;
+
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.Set;
+
+public class IteratorLoop {
+	public static void main(String[] args) {
+		Set<Integer> number=new LinkedHashSet<Integer>();
+		
+		number.add(12);
+		number.add(100);
+		number.add(87);
+		number.add(98);
+		number.add(32);
+		number.add(85);
+		number.add(1);
+		number.add(56);
+		System.out.println(number);
+		
+		Iterator<Integer> itr=number.iterator();
+		while(itr.hasNext()) {
+			Integer i = itr.next();
+			if(i<35) {
+				itr.remove();
+			}
+		}
+		System.out.println(number);		
+	}
+}
+
+MAP INTERFACE============================================================================================================
+package map;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+public class MapDemo {
+	public static void main(String[] args) {
+		Map<Integer,String> hm=new HashMap<Integer,String>();
+		
+		hm.put(101,"saraha");//put means add keys and values
+		hm.put(102,"sar");
+		hm.put(1013,"raha");
+		hm.put(1015,"aha");
+		hm.put(101,"saha");
+		hm.put(1014,"sara");
+		hm.put(1081,"saraha");
+		
+		System.out.println(hm);
+		System.out.println(hm.containsKey(101));//contains key and values means true or false
+		System.out.println(hm.containsValue("aha"));
+		
+		Set<Integer> key=hm.keySet();//IT WILL DISPLAY KEYS ONLY
+		System.out.println(key);
+		
+		Collection <String> values=hm.values();//IT WILL DISPLAY VALUES ONLY
+		System.out.println(values);
+		
+		Set<Entry<Integer,String>> entrySet =hm.entrySet();//IT WILL DISPLAY BOTH KEYS AND VALUES
+		System.out.println(entrySet);
+		
+		for(Entry<Integer,String> x: entrySet) {
+			System.out.println(x);
+		if(x.getValue().equals("raha")) {//GETVALUE MEANS EXACT VALUE WE HAVE TO CHANGE
+			x.setValue("rau");//IT MEANS EXACT VALUE WE WILL CHANGE
+		}	
+	}
+		System.out.println(entrySet);
+	}
+}
+
+
+
+LOOPING STATEMENTS==========================================================================================================
+A)FOR LOOPING=====
+
+package looping;
+public class ForLoop {
+	public static void main(String[] args) {
+		int a=0;
+		
+		for(int i=0;i<5;i++) {
+			a=a+1;
+		    System.out.println(i);
+	}
+	System.out.println("Sum of natural:"+a);
+
+	}
+}
+
+B)WHILE LOOP========
+
+package looping;
+public class WhileLoop {
+	public static void main(String[] args) {
+	  int a=0;
+	  
+	  while(a<=10) {
+	    System.out.println(a);
+	    a=a+3;
+	  }
+}
+}
+
+C)DO WHILE LOOP======
+package looping;
+
+public class DoWhileLoop {
+	public static void main(String[] args) {
+		int a=6;
+		
+		do {
+			System.out.println(" a values is :"+a);
+			a=a+2;
+		}while(a<6);
+	}
+}
+
+D)FOR EACH LOOP=======
+String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
+for (String i : cars) {
+  System.out.println(i);
+}
+
+BRANCHING OR DECISION STATEMENTS=======================================================================================
+A)SIMPLE IF STSTEMENTS====
+int x = 20;
+int y = 18;
+if (x > y) {
+  System.out.println("x is greater than y");
+}
+
+B)IF ELSE STATEMENTS=======
+int time = 20;
+if (time < 18) {
+  System.out.println("Good day.");
+} else {
+  System.out.println("Good evening.");
+}
+
+
+C)ELSE  IF STATEMENTS
+int time = 22;
+if (time < 12) {
+  System.out.println("Good morning.");
+} else if (time < 15) {
+  System.out.println("Good After noon.");
+} else {
+  System.out.println("Good evening.");
+}
+
+D)SWITCH STATEMENTS==========
+int day = 4;
+switch (day) {
+  case 1:
+    System.out.println("Monday");
+    break;
+  case 2:
+    System.out.println("Tuesday");
+    break;
+  case 3:
+    System.out.println("Wednesday");
+    break;
+  case 4:
+    System.out.println("Thursday");
+    break;
+  case 5:
+    System.out.println("Friday");
+    break;
+  case 6:
+    System.out.println("Saturday");
+    break;
+  case 7:
+    System.out.println("Sunday");
+    break;
+}
+
+
+
+
+
+
+
